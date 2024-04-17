@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { User } from './guardtype';
 
 export interface AuthResponseData {
-  user: { email: string; firstName: string, role: string};
+  user: { email: string; firstName: string; role: string };
   token: string;
 }
 
@@ -37,7 +37,7 @@ export class AuthService {
             resData.user.email,
             resData.user.firstName,
             resData.user.role,
-            resData.token,
+            resData.token
           );
         }),
         catchError((error) => {
@@ -49,13 +49,21 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>('https://quiz-4dtk.onrender.com/api/v1/user/login', {
-        email,
-        password,
-      })
+      .post<AuthResponseData>(
+        'https://quiz-4dtk.onrender.com/api/v1/user/login',
+        {
+          email,
+          password,
+        }
+      )
       .pipe(
         tap((resData) => {
-          this.handleAuthentication(resData.user.email, resData.user.firstName, resData.token,resData.user.role);
+          this.handleAuthentication(
+            resData.user.email,
+            resData.user.firstName,
+            resData.token,
+            resData.user.role
+          );
         }),
         catchError((error) => {
           console.error('Error in login:', error);
@@ -71,7 +79,7 @@ export class AuthService {
     const token = this.cookieService.get('token');
 
     if (email && token) {
-      const loadedUser = new User(email, firstName, token,role);
+      const loadedUser = new User(email, firstName, token, role);
       if (loadedUser.tokens) {
         this.user.next(loadedUser);
       }
@@ -91,7 +99,7 @@ export class AuthService {
     token: string,
     role: string
   ) {
-    const user = new User(email, firstName, token,role);
+    const user = new User(email, firstName, token, role);
     this.user.next(user);
 
     // Set cookies
@@ -101,4 +109,3 @@ export class AuthService {
     this.cookieService.set('role', role);
   }
 }
- 

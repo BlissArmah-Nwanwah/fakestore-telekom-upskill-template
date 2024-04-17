@@ -11,7 +11,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'details', component: DetailsComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'sign-up', component: SignupComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'empty-cart', component: EmptyCartComponent },
   { path: 'checkout', component: CheckoutComponent },
