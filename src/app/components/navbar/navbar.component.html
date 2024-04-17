@@ -1,1 +1,77 @@
-<p>navbar works!</p>
+<header>
+  <nav class="navbar">
+    <div (click)="routeToHome()" class="logo-container cursor-pointer">
+      <img src="../../../../../assets/Logo.png" alt="logo" />
+    </div>
+
+    <div id="searchBar" class="search-bar">
+      <form class="search-form">
+        <button><i class="fas fa-search icon"></i></button>
+        <input type="text" placeholder="Search" class="search-input" />
+      </form>
+    </div>
+
+    <!-- icons -->
+    <div class="icon-container">
+      <!-- user icon -->
+      <button
+        (mouseover)="showAuth()"
+        (mouseleave)="hideAuth()"
+        class="auth-button"
+      >
+        <ion-icon
+          [ngClass]="{
+            'icon-gray': !isAuthVisible,
+            'icon-white': isAuthVisible
+          }"
+          name="person-outline"
+          class="icon"
+        ></ion-icon>
+      </button>
+
+      <!-- dropdown -->
+      <div
+        (mouseover)="showAuth()"
+        (mouseleave)="hideAuth()"
+        class="auth-dropdown"
+      >
+        <div
+          class="auth-options"
+          [ngClass]="{ 'auth-option-hide': !isAuthVisible }"
+        >
+          <a
+            class="auth-link hover:text-voilentColor hover:underline"
+            routerLink="/sign-up"
+            >Sign Up</a
+          >
+          <a
+            class="auth-link hover:text-voilentColor hover:underline"
+            routerLink="/login"
+            >Login</a
+          >
+        </div>
+      </div>
+
+      <!-- cart icon -->
+      <button
+        (mouseover)="hovered()"
+        (mouseleave)="notHovered()"
+        (click)="routeToCart()"
+        class="cart-button"
+      >
+        <ion-icon
+          [ngClass]="{ 'ion-icon': selectedProductCount > 0 }"
+          name="cart-outline"
+          class="icon text-2xl text-gray-400 hover:text-white"
+        ></ion-icon>
+        @if (getProductCount() >= 1) {
+        <span
+          class="cart-count bg-red-500 w-5 h-5 rounded-full text-white text-[13px] flex justify-center items-center"
+        >
+          {{ getProductCount() }}
+        </span>
+        }
+      </button>
+    </div>
+  </nav>
+</header>
