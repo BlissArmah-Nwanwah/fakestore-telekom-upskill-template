@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
       (resData) => {
         this.isLoading = false;
         this.router.navigate(['']);
+        console.log('object');
         this.signupForm.reset();
       },
       (error) => {

@@ -58,12 +58,15 @@ export class AuthService {
       )
       .pipe(
         tap((resData) => {
-          this.handleAuthentication(
-            resData.user.email,
-            resData.user.firstName,
-            resData.token,
-            resData.user.role
-          );
+            console.log(resData);
+          if (resData && resData.user) {
+            this.handleAuthentication(
+              resData.user.email,
+              resData.user.firstName,
+              resData.token,
+              resData.user.role
+            );
+          }
         }),
         catchError((error) => {
           console.error('Error in login:', error);
