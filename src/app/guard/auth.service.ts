@@ -36,8 +36,8 @@ export class AuthService {
           this.handleAuthentication(
             resData.user.email,
             resData.user.firstName,
-            resData.user.role,
-            resData.token
+            resData.token,
+            resData.user.role
           );
         }),
         catchError((error) => {
@@ -58,7 +58,6 @@ export class AuthService {
       )
       .pipe(
         tap((resData) => {
-            console.log(resData);
           if (resData && resData.user) {
             this.handleAuthentication(
               resData.user.email,
@@ -83,7 +82,7 @@ export class AuthService {
 
     if (email && token) {
       const loadedUser = new User(email, firstName, token, role);
-      if (loadedUser.tokens) {
+      if (loadedUser) {
         this.user.next(loadedUser);
       }
     }
@@ -94,6 +93,8 @@ export class AuthService {
     this.router.navigate(['/login']);
     this.cookieService.delete('email');
     this.cookieService.delete('token');
+    this.cookieService.delete('firstName');
+    this.cookieService.delete('role');
   }
 
   private handleAuthentication(

@@ -15,9 +15,17 @@
 
     <!-- Products section -->
     <section class="products-section">
+      <div class="title-all-container">
         <div class="title-container">
           Products
         </div>
+        <div id="searchBar" >
+          <form [formGroup]="searchForm" class="search-bar" >
+            <button type="submit"><i class="fas fa-search icon"></i></button>
+            <input type="text" placeholder="Search" class="search-input" formControlName="searchTerm" />
+          </form>
+        </div>
+      </div>
         <div class="content">
             @if (loading) {
                 <div class="loading-message">Loading...😎</div>

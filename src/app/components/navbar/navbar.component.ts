@@ -1,7 +1,14 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../guard/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,25 +18,38 @@ import { ProductService } from '../../Services/product.service';
   imports: [RouterModule, CommonModule, NgOptimizedImage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   logo: string = '../../../../../assets/Logo.png';
   heart: string = '../../../../../assets/icons/heart.png';
   user: string = '../../../../../assets/icons/user.png';
   cart: string = '../../../../../assets/icons/cart.png';
 
+  private userSub!: Subscription;
+  isAuthenticated = false;
+  userName!: string;
   showNav: boolean = false;
   selectedProductCount: number = 0;
   dropdownVisible: boolean = false;
   isHovered: boolean = false;
   isAuthVisible: boolean = false;
 
-  constructor(private router: Router, private productService: ProductService) {
+  constructor(
+    private router: Router,
+    private productService: ProductService,
+    private authService: AuthService
+  ) {
     this.selectedProductCount = this.productService.productCount;
-    console.log(this.isAuthVisible );
+    console.log(this.isAuthenticated);
   }
 
   ngOnInit(): void {
     this.getProductCount();
+    this.userSub = this.authService.user$.subscribe((user) => {
+      this.isAuthenticated = !!user;
+      this.userName = user?.firstName ?? '';
+    });
+    console.log(this.isAuthenticated);
+
   }
 
   routeToCart() {
@@ -77,5 +97,9 @@ export class NavbarComponent implements OnInit {
   }
   hideAuth() {
     this.isAuthVisible = false;
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 }

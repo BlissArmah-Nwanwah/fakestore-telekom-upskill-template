@@ -1,101 +1,112 @@
-import { Component } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProductData, cartProductData } from '../../Services/product-data';
 import { Router } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
-import { EMPTY, catchError, finalize } from 'rxjs';
-
+import { EMPTY } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'],
+  imports: [NavbarComponent,ReactiveFormsModule],
+
 })
-export class HomeComponent {
-
-  images = [
-    '../../../../assets/images/shop-hero-1-product-slide-1.png',
-    '../../../../assets/images/s1.jpg',
-    '../../../../assets/images/s2.png',
-    // Add more image paths as needed
-  ];
-  currentIndex = 0;
-
-  
+export class HomeComponent implements OnInit {
+  searchForm!: FormGroup;
   products: ProductData[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 8;
   loading: boolean = false;
 
-
-  constructor(private router:Router,private productService: ProductService){}
+  constructor(
+    private router: Router,
+    private productService: ProductService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-  this.getMenCategory()
+    this.allProduct();
+    this.searchForm = this.formBuilder.group({
+      searchTerm: ['']
+    });
+
+    this.searchForm.get('searchTerm')?.valueChanges
+    .pipe(
+      debounceTime(300), // Debounce for 300 milliseconds
+      distinctUntilChanged() // Only emit if the value has changed
+    )
+    .subscribe(() => {
+      this.searchProducts();
+    });
   }
 
-  getMenCategory(): void {
-  this.loading = true;
-  this.productService.getProducts()
-  .pipe(
-  catchError(() => EMPTY),
-        // finalize(() => this.loading = false)
-  )
-  .subscribe(products => {
-  this.products = products;
-  this.loading = false;
-  });
+  allProduct(): void {
+    this.loading = true;
+    this.productService.getProducts()
+      .pipe(
+        catchError(() => EMPTY)
+      )
+      .subscribe(products => {
+        this.products = products;
+        this.loading = false;
+      });
   }
 
   onProductSelectedToCart(product: cartProductData): void {
-    // add product to cart
-  this.productService.setSelectedProductToCart(product);
+    this.productService.setSelectedProductToCart(product);
   }
 
   onProductSelectDetail(product: cartProductData): void {
-    // Navigate to the details page with the product ID as a parameter
-  this.productService.setSelectedProduct(product);
-    
-  this.router.navigate(["/details"]);
+    this.productService.setSelectedProduct(product);
+    this.router.navigate(["/details"]);
   }
-
-  
 
   nextPage(): void {
-  if (this.hasNextPage()) {
-  this.loading = true;
-  this.currentPage++;
-  this.getMenCategory();
-  }
+    if (this.hasNextPage()) {
+      this.currentPage++;
+    }
   }
 
   prevPage(): void {
-  if (this.hasPreviousPage()) {
-  this.loading = true;
-  this.currentPage--;
-  this.getMenCategory();
-  }
+    if (this.hasPreviousPage()) {
+      this.currentPage--;
+    }
   }
 
   hasNextPage(): boolean {
-  return (this.currentPage * this.itemsPerPage) < this.products.length;
+    return (this.currentPage * this.itemsPerPage) < this.products.length;
   }
 
   hasPreviousPage(): boolean {
-  return this.currentPage > 1;
+    return this.currentPage > 1;
   }
 
   get paginationVisible(): boolean {
-  return this.products.length > this.itemsPerPage;
+    return this.products.length > this.itemsPerPage;
   }
 
   get displayedProducts(): ProductData[] {
-  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  const endIndex = startIndex + this.itemsPerPage;
-  return this.products.slice(startIndex, endIndex);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.products.slice(startIndex, endIndex);
   }
 
-
+  searchProducts(): void {
+    const searchTerm = this.searchForm.value.searchTerm.trim().toLowerCase();
+    
+    if (searchTerm === '') {
+      this.products = this.products;
+    } else {
+      this.products = this.products.filter(product =>
+        product.title.toLowerCase().includes(searchTerm)
+      );
+    }
+  
+    this.currentPage = 1;
+  }
+  
 }
