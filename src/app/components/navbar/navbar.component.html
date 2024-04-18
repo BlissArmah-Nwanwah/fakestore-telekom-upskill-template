@@ -4,10 +4,14 @@
       <img src="../../../../../assets/Logo.png" alt="logo" />
     </div>
 
-  
-
     <!-- icons -->
     <div class="icon-container">
+      @if (isAuthenticated){
+      <h1 (mouseover)="showAuth()" (mouseleave)="hideAuth()">
+        Welcome Bliss Armah
+      </h1>
+      } @if(!isAuthenticated){
+
       <!-- user icon -->
       <button
         (mouseover)="showAuth()"
@@ -23,8 +27,10 @@
           class="icon"
         ></ion-icon>
       </button>
+      }
 
       <!-- dropdown -->
+      @if (!isAuthenticated){
       <div
         (mouseover)="showAuth()"
         (mouseleave)="hideAuth()"
@@ -34,18 +40,26 @@
           class="auth-options"
           [ngClass]="{ 'auth-option-hide': !isAuthVisible }"
         >
-          <a
-            class="auth-link hover:text-voilentColor hover:underline"
-            routerLink="/sign-up"
-            >Sign Up</a
-          >
-          <a
-            class="auth-link hover:text-voilentColor hover:underline"
-            routerLink="/login"
-            >Login</a
-          >
+          <a class="auth-link" routerLink="/sign-up">Sign Up</a>
+          <a class="auth-link" routerLink="/login">Login</a>
         </div>
       </div>
+      }
+      
+      @if (isAuthenticated){
+      <div
+        (mouseover)="showAuth()"
+        (mouseleave)="hideAuth()"
+        class="auth-dropdown-for-user"
+      >
+        <div
+          class="auth-options"
+          [ngClass]="{ 'auth-option-hide': !isAuthVisible }"
+        >
+          <a class="auth-link" routerLink="/login">Logout</a>
+        </div>
+      </div>
+      }
 
       <!-- cart icon -->
       <button
@@ -53,11 +67,12 @@
         (mouseleave)="notHovered()"
         (click)="routeToCart()"
         class="cart-button"
+        [ngClass]="{ 'cart-button-color': selectedProductCount > 0 }"
       >
         <ion-icon
-          [ngClass]="{ 'ion-icon': selectedProductCount > 0 }"
+          [ngClass]="{ 'cart-button-icon ': selectedProductCount > 0 }"
           name="cart-outline"
-          class="icon text-2xl text-gray-400 hover:text-white"
+          class="icon-gray icon"
         ></ion-icon>
         @if (getProductCount() >= 1) {
         <span

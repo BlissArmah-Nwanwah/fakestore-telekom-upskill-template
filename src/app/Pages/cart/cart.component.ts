@@ -36,7 +36,6 @@ export class CartComponent implements OnInit {
       return total + amount;
     }, 0);
   }
-  
 
   removeProduct(product: cartProductData): void {
     this.productService.removeProductFromCart(product); // Remove product from cart
@@ -48,15 +47,18 @@ export class CartComponent implements OnInit {
 
   incrementCount(id: string) {
     this.productService.incrementProductCount(id);
-    this.TotalAmount()
+    this.TotalAmount();
   }
 
   decrementCount(id: string) {
     this.productService.decrementProductCount(id);
-    this.TotalAmount()
+    this.TotalAmount();
+    if (this.cartProducts.length === 0) {
+      this.router.navigate(['/empty-cart']);
+    }
   }
 
-  redirect(){
+  redirect() {
     this.router.navigate(['']);
   }
 }

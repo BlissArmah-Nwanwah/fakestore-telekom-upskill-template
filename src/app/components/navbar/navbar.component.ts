@@ -19,10 +19,6 @@ import { AuthService } from '../../guard/auth.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  logo: string = '../../../../../assets/Logo.png';
-  heart: string = '../../../../../assets/icons/heart.png';
-  user: string = '../../../../../assets/icons/user.png';
-  cart: string = '../../../../../assets/icons/cart.png';
 
   private userSub!: Subscription;
   isAuthenticated = false;
