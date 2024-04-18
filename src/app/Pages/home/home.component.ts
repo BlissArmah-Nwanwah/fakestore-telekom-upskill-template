@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ProductService } from '../../Services/product.service';
 import { ProductData, cartProductData } from '../../Services/product-data';
 import { Router } from '@angular/router';
-import { ProductService } from '../../Services/product.service';
 import { EMPTY } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
+  standalone:true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [NavbarComponent,ReactiveFormsModule],
-
+  imports: [NavbarComponent,ReactiveFormsModule]
 })
 export class HomeComponent implements OnInit {
   searchForm!: FormGroup;
@@ -99,7 +98,8 @@ export class HomeComponent implements OnInit {
     const searchTerm = this.searchForm.value.searchTerm.trim().toLowerCase();
     
     if (searchTerm === '') {
-      this.products = this.products;
+      // Reset products to all products when search term is empty
+      this.allProduct();
     } else {
       this.products = this.products.filter(product =>
         product.title.toLowerCase().includes(searchTerm)
@@ -108,5 +108,4 @@ export class HomeComponent implements OnInit {
   
     this.currentPage = 1;
   }
-  
 }
