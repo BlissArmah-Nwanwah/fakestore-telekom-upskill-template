@@ -59,7 +59,12 @@ export class ProductService {
   }
 
 
-  setSelectedProduct(product: cartProductData): void {
+  setSelectedProduct(product: ProductData): void {
+    this.selectedProduct = product;
+    this.updateLocalStorage();
+  }
+
+  setSelectedProductToCart(product: cartProductData): void {
     const existingProductIndex = this.cartProducts.findIndex(p => p.id === product.id);
   
     if (existingProductIndex !== -1) {

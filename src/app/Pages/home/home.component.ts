@@ -51,11 +51,13 @@ export class HomeComponent {
 
   onProductSelectedToCart(product: cartProductData): void {
     // add product to cart
-  this.productService.setSelectedProduct(product);
+  this.productService.setSelectedProductToCart(product);
   }
 
-  onProductSelectDetail(): void {
+  onProductSelectDetail(product: cartProductData): void {
     // Navigate to the details page with the product ID as a parameter
+  this.productService.setSelectedProduct(product);
+    
   this.router.navigate(["/details"]);
   }
 

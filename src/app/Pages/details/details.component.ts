@@ -24,6 +24,7 @@ export class DetailsComponent {
   ngOnInit(): void {
 
     this.getSelectedProduct();
+    console.log(this.selectedProduct);
   }
 
   getSelectedProduct() {
