@@ -1,10 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
 import { Subscription } from 'rxjs';
@@ -16,10 +11,8 @@ import { AuthService } from '../../guard/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
   imports: [RouterModule, CommonModule, NgOptimizedImage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-
   private userSub!: Subscription;
   isAuthenticated = false;
   userName!: string;
@@ -44,8 +37,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
       this.userName = user?.firstName ?? '';
     });
-    console.log(this.isAuthenticated);
-
   }
 
   routeToCart() {

@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 8;
   loading: boolean = false;
+  productLength:number = 0;
 
   constructor(
     private router: Router,
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe(products => {
         this.products = products;
+        this.productLength = Math.ceil(products.length/8);
         this.loading = false;
       });
   }
