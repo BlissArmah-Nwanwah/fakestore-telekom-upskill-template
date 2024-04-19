@@ -8,13 +8,11 @@
       alt=""
     />
     <div class="text-overlay">
-      <div
-        class="text-content"
-      >
+      <div class="text-content">
         <p class="category">T-Shirt / Tops</p>
         <h1 class="title">Summer Value Pack</h1>
         <p class="description">cool / colorful /comfy</p>
-        <button class="cta-button">Shop Now</button>
+        <button mat-raised-button color="accent">Shop Now</button>
       </div>
     </div>
   </section>
@@ -62,7 +60,8 @@
           </div>
 
           <button
-            class="add-to-cart-button"
+            mat-raised-button
+            color="basic"
             (click)="onProductSelectedToCart(product)"
           >
             Add To Cart

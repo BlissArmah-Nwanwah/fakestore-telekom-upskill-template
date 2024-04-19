@@ -80,11 +80,13 @@
     transition-duration: 0.3s;
     padding: 0.5rem;
     border-radius: 0.375rem;
+    cursor: pointer;
   }
   
   .add-to-cart-button:hover {
     border-color: #ccc;
   }
+  
   
   .price-button {
     border-width: 2px;

@@ -3,7 +3,7 @@ import { ActivatedRoute, Route, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { ProductData } from '../../Services/product-data';
+import { ProductData, cartProductData } from '../../Services/product-data';
 import { ProductService } from '../../Services/product.service';
 import { EMPTY, catchError } from 'rxjs';
 
@@ -40,6 +40,11 @@ export class DetailsComponent {
         this.selectedProduct = products;
       });
   }
+
+  onProductSelectedToCart(product: cartProductData): void {
+    this.productService.setSelectedProductToCart(product);
+  }
+
 
   changeBgColor(size: string) {
     this.selectedSize = size;

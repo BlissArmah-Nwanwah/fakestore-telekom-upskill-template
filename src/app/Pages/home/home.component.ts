@@ -6,13 +6,15 @@ import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @Component({
   selector: 'app-home',
   standalone:true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [NavbarComponent,ReactiveFormsModule]
+  imports: [NavbarComponent,ReactiveFormsModule,MatButtonModule]
 })
 export class HomeComponent implements OnInit {
   searchForm!: FormGroup;

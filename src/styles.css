@@ -2,3 +2,24 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-raised-button.mat-basic{
+    background-color: rgba(132, 52, 225, 1) !important;
+    color: white !important;
+    width: 100% ;
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+
+.mat-mdc-raised-button.mat-primary{
+    background-color: rgba(132, 52, 225, 1) !important;
+    color: white !important;
+  }
+
+
+  .mat-mdc-raised-button.mat-accent{
+    background-color: #fff !important;
+    padding: 8px;
+    width: 160px !important;
+    color: #3c4242 !important;
+  }

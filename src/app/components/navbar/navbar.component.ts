@@ -4,13 +4,15 @@ import { Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../Services/product.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../guard/auth.service';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  imports: [RouterModule, CommonModule, NgOptimizedImage],
+  imports: [RouterModule, CommonModule, NgOptimizedImage,MatButtonModule],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;

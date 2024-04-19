@@ -58,7 +58,10 @@ export class CartComponent implements OnInit {
     }
   }
 
-  redirect() {
+  redirectToHome() {
     this.router.navigate(['']);
   }
+  
+  redirectToCheckout(){
+    this.router.navigate(['/checkout']);}
 }

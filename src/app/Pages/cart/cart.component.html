@@ -31,7 +31,7 @@
 
   <div class="cart-summary">
     
-      <button class="continue-shopping" (click)="redirect()">Continue Shopping</button>
+      <button class="continue-shopping" (click)="redirectToHome()">Continue Shopping</button>
 
     <div class="order-summary">
       <div class="summary-details">
@@ -42,7 +42,7 @@
           <p class="font-bold">Grand Total</p>
           <p>$ {{ totalAmount }}</p>
       </div>
-      <button class="checkout-button">Proceed To Checkout</button>
+      <button class="checkout-button" (click)="redirectToCheckout()">Proceed To Checkout</button>
     </div>
   </div>
 </section>

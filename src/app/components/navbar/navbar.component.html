@@ -9,10 +9,10 @@
       @if (isAuthenticated){
       <h1>Welcome Bliss Armah</h1>
       } @if (isAuthenticated){
-      <button class="auth-link" (click)="logout()">Logout</button>
+      <button mat-raised-button color="link" (click)="logout()">Logout</button>
       }@else {
 
-      <button class="auth-link" routerLink="/login">Login</button>
+      <button mat-raised-button color="link" routerLink="/login">Login</button>
       }
 
       <!-- cart icon -->
