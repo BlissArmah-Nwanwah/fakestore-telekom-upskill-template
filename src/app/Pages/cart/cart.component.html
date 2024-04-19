@@ -19,9 +19,9 @@
       </div>
       <p class="product-price">$ {{ product.price }}</p>
       <div class="quantity">
-        <button class="quantity-button" (click)="decrementCount(product.id)">-</button>
+        <button class="quantity-button" (click)="decrementCount(product.id)"><i class="fa-solid fa-minus"></i></button>
         <p >{{ product.count }}</p>
-        <button class="quantity-button" (click)="incrementCount(product.id)">+</button>
+        <button class="quantity-button" (click)="incrementCount(product.id)"><i class="fa-solid fa-plus"></i></button>
       </div>
       <button class="">FREE</button>
       <p class="subtotal">$ {{ product.price }}</p>

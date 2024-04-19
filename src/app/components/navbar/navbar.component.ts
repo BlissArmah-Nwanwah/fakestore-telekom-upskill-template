@@ -28,14 +28,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {
     this.selectedProductCount = this.productService.productCount;
-    console.log(this.isAuthenticated);
   }
 
   ngOnInit(): void {
     this.getProductCount();
     this.userSub = this.authService.user$.subscribe((user) => {
       this.isAuthenticated = !!user;
-      this.userName = user?.firstName ?? '';
+      console.log(this.isAuthenticated);
     });
   }
 
@@ -52,38 +51,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.productService.productCount;
   }
 
-  toggleNav() {
-    this.showNav = !this.showNav;
-  }
+ 
   routeToHome() {
     this.router.navigate(['']);
   }
 
-  hidNav() {
-    this.showNav = false;
-  }
-
-  showDropdown(): void {
-    this.dropdownVisible = true;
-  }
-
-  hideDropdown(): void {
-    this.dropdownVisible = false;
-  }
-
-  hovered() {
-    this.isHovered = true;
-  }
-
-  notHovered() {
-    this.isHovered = false;
-  }
-
-  showAuth() {
-    this.isAuthVisible = true;
-  }
-  hideAuth() {
-    this.isAuthVisible = false;
+  logout(){
+    this.authService.logout();
   }
 
   ngOnDestroy() {

@@ -47,31 +47,33 @@
 }
 .quantity {
   display: flex;
-  gap: 6px;
+  gap: 16px;
   align-items: center;
   justify-content: center;
   padding:0  0.5rem;
-  color: gray;
-  opacity: 0.4;
+  color: rgb(46, 46, 46);
 }
 
 .quantity-button {
   border: none;
-  background-color: #f6f6f6;
-  color: #ccc;
+  color:black;
 }
 
 .subtotal {
   margin: auto;
 }
 
+button{
+  background-color: transparent;
+  cursor: pointer;
+}
 .remove-button {
   border: none;
-  background-color: #f6f6f6;
+  color: tomato;
 }
 
 .remove-button:hover {
-  color: rgba(132, 52, 225, 1);
+  color: red
 }
 
 .cart-summary {
@@ -134,27 +136,6 @@
 .checkout-button:hover {
   background-color: #333;
 }
-
-/* @media (min-width: 1024px) {
-  .grid-view-container {
-    display: flex;
-    width: 89vw;
-  }
-  .cart-product{
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-
-  }
-  .product-title{
-    display: block;
-  }
-  .product-price{
-    text-align: center;
-  }
-  .order-summary{
-  width: 20%;
-
-  }
-} */
 
 
 @media (min-width: 768px) {

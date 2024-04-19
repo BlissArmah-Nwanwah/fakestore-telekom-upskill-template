@@ -7,64 +7,16 @@
     <!-- icons -->
     <div class="icon-container">
       @if (isAuthenticated){
-      <h1 (mouseover)="showAuth()" (mouseleave)="hideAuth()">
-        Welcome Bliss Armah
-      </h1>
-      } @if(!isAuthenticated){
+      <h1>Welcome Bliss Armah</h1>
+      } @if (isAuthenticated){
+      <button class="auth-link" (click)="logout()">Logout</button>
+      }@else {
 
-      <!-- user icon -->
-      <button
-        (mouseover)="showAuth()"
-        (mouseleave)="hideAuth()"
-        class="auth-button"
-      >
-        <ion-icon
-          [ngClass]="{
-            'icon-gray': !isAuthVisible,
-            'icon-white': isAuthVisible
-          }"
-          name="person-outline"
-          class="icon"
-        ></ion-icon>
-      </button>
-      }
-
-      <!-- dropdown -->
-      @if (!isAuthenticated){
-      <div
-        (mouseover)="showAuth()"
-        (mouseleave)="hideAuth()"
-        class="auth-dropdown"
-      >
-        <div
-          class="auth-options"
-          [ngClass]="{ 'auth-option-hide': !isAuthVisible }"
-        >
-          <a class="auth-link" routerLink="/sign-up">Sign Up</a>
-          <a class="auth-link" routerLink="/login">Login</a>
-        </div>
-      </div>
-      }
-      
-      @if (isAuthenticated){
-      <div
-        (mouseover)="showAuth()"
-        (mouseleave)="hideAuth()"
-        class="auth-dropdown-for-user"
-      >
-        <div
-          class="auth-options"
-          [ngClass]="{ 'auth-option-hide': !isAuthVisible }"
-        >
-          <a class="auth-link" routerLink="/login">Logout</a>
-        </div>
-      </div>
+      <button class="auth-link" routerLink="/login">Login</button>
       }
 
       <!-- cart icon -->
       <button
-        (mouseover)="hovered()"
-        (mouseleave)="notHovered()"
         (click)="routeToCart()"
         class="cart-button"
         [ngClass]="{ 'cart-button-color': selectedProductCount > 0 }"

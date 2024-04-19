@@ -90,6 +90,10 @@
   .icon-white{
     color: white;
   }
+
+  button{
+    cursor: pointer;
+  }
   
   .cart-button {
     background-color: #F6F6F6;

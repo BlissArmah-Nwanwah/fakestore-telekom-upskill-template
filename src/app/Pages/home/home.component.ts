@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
 
   onProductSelectDetail(product: cartProductData): void {
     this.productService.setSelectedProduct(product);
-    this.router.navigate(["/details"]);
+    this.router.navigate(["/details", product.id]);
   }
 
   nextPage(): void {

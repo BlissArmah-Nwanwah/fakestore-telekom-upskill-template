@@ -1,91 +1,93 @@
 <app-navbar></app-navbar>
 
 <section class="main-section">
-    <section class="image-section mb-5">
-      <img class="full-width" src="../../../../assets/images/shop-hero-1-product-slide-1.png" alt="" />
-      <div class="text-overlay">
-        <div class="text-content flex flex-col gap-5 lg:gap-10 text-white start-0 md:w-2/3">
-          <p class="category ">T-Shirt / Tops</p>
-          <h1 class="title">Summer Value Pack</h1>
-          <p class="description">cool / colorful /comfy</p>
-          <button class="cta-button ">Shop Now</button>
-        </div>
+  <section class="image-section mb-5">
+    <img
+      class="full-width"
+      src="../../../../assets/images/shop-hero-1-product-slide-1.png"
+      alt=""
+    />
+    <div class="text-overlay">
+      <div
+        class="text-content"
+      >
+        <p class="category">T-Shirt / Tops</p>
+        <h1 class="title">Summer Value Pack</h1>
+        <p class="description">cool / colorful /comfy</p>
+        <button class="cta-button">Shop Now</button>
       </div>
-    </section>
-
-    <!-- Products section -->
-    <section class="products-section">
-      <div class="title-all-container">
-        <div class="title-container">
-          Products
-        </div>
-        <div id="searchBar" >
-          <form [formGroup]="searchForm" class="search-bar" >
-            <button type="submit"><i class="fas fa-search icon"></i></button>
-            <input type="text" placeholder="Search" class="search-input" formControlName="searchTerm" />
-          </form>
-        </div>
-      </div>
-        <div class="content">
-            @if (loading) {
-                <div class="loading-message">Loading...😎</div>
-                }
-                
-                <div class="product-grid">
-                  @if (!loading && displayedProducts.length >0) { @for (product of
-                  displayedProducts; track product) {
-                  <div class="product-card">
-                    <div class="product-info" (click)="onProductSelectDetail(product)">
-                      <img
-                        class="product-image"
-                        [src]="product.image"
-                        [alt]="product.title"
-                      />
-                      <div class="product-details">
-                        <p class="product-title">
-                          {{ product.title }}
-                        </p>
-                        <div
-                          class="product-price"
-                        >
-                          <span>$</span>
-                          {{ product.price }}
-                        </div>
-                      </div>
-                    </div>
-                
-                    <button
-                      class="add-to-cart-button border border-[#3C4242] text-[#8A33FD] w-full h-10 font-semibold rounded-full mt-5"
-                      (click)="onProductSelectedToCart(product)"
-                    >
-                      Add To Cart
-                    </button>
-                  </div>
-                
-                  }} @if (!loading && displayedProducts.length === 0) {
-                  <div class="no-products">No products found.</div>
-                  }
-                </div>
-                @if (paginationVisible) {
-                <div class="pagination-buttons flex gap-10">
-                  <button
-                    class="pagination-button cursor-pointer"
-                    (click)="prevPage()"
-                    [disabled]="currentPage === 1"
-                  >
-                    <i class="fas fa-arrow-left"></i>
-                  </button>
-                  <p>
-                    {{ currentPage }} out of {{ productLength }}
-                  </p>
-                  <button class="pagination-button cursor-pointer" (click)="nextPage()">
-                    <i class="fas fa-arrow-right"></i>
-                  </button>
-                </div>
-                }
-                
-        </div>
-      </section>
-      
+    </div>
   </section>
-  
+
+  <!-- Products section -->
+  <section class="products-section">
+    <div class="title-all-container">
+      <div class="title-container">Products</div>
+      <div id="searchBar">
+        <form [formGroup]="searchForm" class="search-bar">
+          <button type="submit"><i class="fas fa-search icon"></i></button>
+          <input
+            type="text"
+            placeholder="Search"
+            class="search-input"
+            formControlName="searchTerm"
+          />
+        </form>
+      </div>
+    </div>
+    <div class="content">
+      @if (loading) {
+      <div class="loading-message">Loading...😎</div>
+      }
+
+      <div class="product-grid">
+        @if (!loading && displayedProducts.length >0) { @for (product of
+        displayedProducts; track product) {
+        <div class="product-card">
+          <div class="product-info" (click)="onProductSelectDetail(product)">
+            <img
+              class="product-image"
+              [src]="product.image"
+              [alt]="product.title"
+            />
+            <div class="product-details">
+              <p class="product-title">
+                {{ product.title }}
+              </p>
+              <div class="product-price">
+                <span>$</span>
+                {{ product.price }}
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="add-to-cart-button"
+            (click)="onProductSelectedToCart(product)"
+          >
+            Add To Cart
+          </button>
+        </div>
+
+        }} @if (!loading && displayedProducts.length === 0) {
+        <div class="no-products">No products found.</div>
+        }
+      </div>
+      @if (paginationVisible) {
+      <div class="pagination-buttons">
+        <button
+          class="pagination-button"
+          (click)="prevPage()"
+          [disabled]="currentPage === 1"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <p>{{ currentPage }} out of {{ productLength }}</p>
+        <button class="pagination-button cursor-pointer" (click)="nextPage()">
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      }
+    </div>
+  </section>
+</section>

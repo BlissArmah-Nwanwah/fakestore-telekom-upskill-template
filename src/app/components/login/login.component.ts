@@ -17,52 +17,35 @@ import { AuthResponseData, AuthService } from '../../guard/auth.service';
 
 export class LoginComponent implements OnInit {
   signupForm!: FormGroup 
-  createAccount = false;
   isLoading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
-      name: new FormControl(null),
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      username: new FormControl(null),
       password: new FormControl(null, Validators.required),
     });
   }
 
-  onToggleCreateAccount() {
-    this.createAccount = !this.createAccount;
-    
-    // Set the 'name' field validator based on the 'createAccount' flag
-    if (this.createAccount) {
-      this.signupForm.get('name')?.setValidators([Validators.required]);
-    } else {
-      this.signupForm.get('name')?.clearValidators();
-    }
-    // Update the 'name' field validation
-    this.signupForm.get('name')?.updateValueAndValidity();
-  }
+
 
   onSubmit() {
-    const name = this.signupForm.value.name;
-    const email = this.signupForm.value.email;
+    const username = this.signupForm.value.username;
     const password = this.signupForm.value.password;
 
     let authObs: Observable<AuthResponseData>;
     this.isLoading = true;
 
-    if (this.createAccount) {
-      authObs = this.authService.signUp(name, email, password);
-    } else {
-      authObs = this.authService.logIn(email, password);
-    }
+
+      authObs = this.authService.logIn(username, password);
+    
 
     authObs.subscribe(
       (resData) => {
         this.isLoading = false;
-        this.router.navigate(['']);
-        console.log('object');
         this.signupForm.reset();
+        this.router.navigate(['/']);
       },
       (error) => {
         console.log(error);

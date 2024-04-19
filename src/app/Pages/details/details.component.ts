@@ -1,35 +1,44 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Route, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ProductData } from '../../Services/product-data';
 import { ProductService } from '../../Services/product.service';
+import { EMPTY, catchError } from 'rxjs';
 
 @Component({
-    selector: 'app-details',
-    standalone: true,
-    templateUrl: './details.component.html',
-    styleUrl: './details.component.css',
-    imports: [CommonModule, FooterComponent, RouterLink, NavbarComponent]
+  selector: 'app-details',
+  standalone: true,
+  templateUrl: './details.component.html',
+  styleUrl: './details.component.css',
+  imports: [CommonModule, FooterComponent, RouterLink, NavbarComponent],
 })
 export class DetailsComponent {
-  selectedProduct: ProductData | null = null;
+  selectedProduct!: ProductData;
   loading: boolean = false;
   selectedSize: string = '';
+  id!: string;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) { }
-
-
-  ngOnInit(): void {
-
-    this.getSelectedProduct();
-    console.log(this.selectedProduct);
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) {
+    this.id = this.route.snapshot.params['id'];
   }
 
-  getSelectedProduct() {
-    this.selectedProduct = this.productService.getSelectedProduct();
+  ngOnInit(): void {
+    this.getSingleProduct();
+  }
 
+  getSingleProduct() {
+    this.loading = true;
+    this.productService
+      .getSelectedProduct(this.id)
+      .pipe(catchError(() => EMPTY))
+      .subscribe((products) => {
+        this.selectedProduct = products;
+      });
   }
 
   changeBgColor(size: string) {
@@ -40,5 +49,4 @@ export class DetailsComponent {
   isSizeSelected(size: string): boolean {
     return this.selectedSize === size;
   }
-
 }

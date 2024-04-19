@@ -1,12 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, catchError, count, map, of, throwError } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  catchError,
+  count,
+  map,
+  of,
+  throwError,
+} from 'rxjs';
 import { ProductData, cartProductData } from './product-data';
 
 // Declare the 'google' object
 declare const google: any;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private selectedProductKey = 'selectedProduct';
@@ -19,12 +27,10 @@ export class ProductService {
   productCount: number = 0;
   activeButton: string = '';
 
-  private apiurl = "https://fakestoreapi.com/products"
-
-
+  private apiurl = `https://fakestoreapi.com/products`;
 
   constructor(private http: HttpClient) {
-  this.loadFromLocalStorage();
+    this.loadFromLocalStorage();
   }
 
   private loadFromLocalStorage(): void {
@@ -38,26 +44,34 @@ export class ProductService {
       this.cartProducts = JSON.parse(storedCartProducts);
     }
 
-    
-    
     const storedProductCount = localStorage.getItem(this.productCountKey);
     if (storedProductCount) {
       this.productCount = JSON.parse(storedProductCount);
     }
   }
 
-
   private updateLocalStorage(): void {
-    localStorage.setItem(this.selectedProductKey, JSON.stringify(this.selectedProduct));
-    localStorage.setItem(this.cartProductsKey, JSON.stringify(this.cartProducts));
-    localStorage.setItem(this.productCountKey, JSON.stringify(this.productCount));
+    localStorage.setItem(
+      this.selectedProductKey,
+      JSON.stringify(this.selectedProduct)
+    );
+    localStorage.setItem(
+      this.cartProductsKey,
+      JSON.stringify(this.cartProducts)
+    );
+    localStorage.setItem(
+      this.productCountKey,
+      JSON.stringify(this.productCount)
+    );
   }
 
-
-  getProducts(): Observable<ProductData[]> {
+  getProducts() {
     return this.http.get<ProductData[]>(this.apiurl);
   }
 
+  getSelectedProduct(id: string) {
+    return this.http.get<ProductData>(`${this.apiurl}/${id}`);
+  }
 
   setSelectedProduct(product: ProductData): void {
     this.selectedProduct = product;
@@ -65,12 +79,15 @@ export class ProductService {
   }
 
   setSelectedProductToCart(product: cartProductData): void {
-    const existingProductIndex = this.cartProducts.findIndex(p => p.id === product.id);
-  
+    const existingProductIndex = this.cartProducts.findIndex(
+      (p) => p.id === product.id
+    );
+
     if (existingProductIndex !== -1) {
       // Product already exists in the cart, increase count by one
       if (this.cartProducts[existingProductIndex]) {
-        this.cartProducts[existingProductIndex].count = (this.cartProducts[existingProductIndex].count || 0) + 1;
+        this.cartProducts[existingProductIndex].count =
+          (this.cartProducts[existingProductIndex].count || 0) + 1;
       }
     } else {
       // Product does not exist in the cart, add it
@@ -78,10 +95,10 @@ export class ProductService {
       this.cartProducts.push(product);
       this.productCount += 1; // Increase the total product count
     }
-  
+
     this.updateLocalStorage();
   }
-  
+
   incrementProductCount(productId: string): void {
     this.updateProductCount(productId, 1);
   }
@@ -92,7 +109,7 @@ export class ProductService {
   }
 
   private updateProductCount(productId: string, countChange: number): void {
-    const index = this.cartProducts.findIndex(p => p.id === productId);
+    const index = this.cartProducts.findIndex((p) => p.id === productId);
 
     if (index !== -1) {
       // Product exists in the cart
@@ -101,7 +118,7 @@ export class ProductService {
       if (newCount <= 0) {
         // If the new count is less than or equal to 0, remove the product from the cart
         this.cartProducts.splice(index, 1);
-        this.productCount--
+        this.productCount--;
       } else {
         // Otherwise, update the count of the product
         this.cartProducts[index].count = newCount;
@@ -111,15 +128,13 @@ export class ProductService {
       this.updateLocalStorage();
     }
   }
-  
-
-  getSelectedProduct(): ProductData | null {
-    return this.selectedProduct;
-  }
 
   cartCount(count: number): void {
     this.productCount += count;
-    localStorage.setItem(this.productCountKey, JSON.stringify(this.productCount));
+    localStorage.setItem(
+      this.productCountKey,
+      JSON.stringify(this.productCount)
+    );
   }
 
   // A METHOD TO GET ALL THE SAVED CART PRODUCT
@@ -129,14 +144,13 @@ export class ProductService {
   }
 
   removeProductFromCart(product: ProductData): void {
-    const index = this.cartProducts.findIndex(p => p.id === product.id);
+    const index = this.cartProducts.findIndex((p) => p.id === product.id);
     if (index !== -1) {
-    this.cartProducts.splice(index, 1);
-    this.productCount--; // Decrease product count
-    this.updateLocalStorage();
+      this.cartProducts.splice(index, 1);
+      this.productCount--; // Decrease product count
+      this.updateLocalStorage();
     }
   }
-
 
   setActiveButton(button: string): void {
     this.activeButton = button;
@@ -145,5 +159,4 @@ export class ProductService {
   getActiveButton(): string {
     return this.activeButton;
   }
-
 }
