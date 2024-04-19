@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.selectedProductCount >= 1) {
       this.router.navigate(['/cart']);
     } else {
-      null;
+      this.router.navigate(['/empty-cart']);
     }
   }
 

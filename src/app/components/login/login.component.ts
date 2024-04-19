@@ -18,6 +18,7 @@ import { AuthResponseData, AuthService } from '../../guard/auth.service';
 export class LoginComponent implements OnInit {
   signupForm!: FormGroup 
   isLoading = false;
+  errorMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -44,14 +45,14 @@ export class LoginComponent implements OnInit {
     authObs.subscribe(
       (resData) => {
         this.isLoading = false;
-        this.signupForm.reset();
         this.router.navigate(['/']);
+        this.signupForm.reset();
       },
       (error) => {
         console.log(error);
         this.isLoading = false;
         this.signupForm.reset();
-
+        this.errorMessage = error.message;
       }
     );
 

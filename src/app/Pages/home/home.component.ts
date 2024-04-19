@@ -7,14 +7,14 @@ import { EMPTY } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import {MatButtonModule} from '@angular/material/button';
-
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-home',
   standalone:true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [NavbarComponent,ReactiveFormsModule,MatButtonModule]
+  imports: [NavbarComponent,ReactiveFormsModule,MatButtonModule,MatPaginatorModule]
 })
 export class HomeComponent implements OnInit {
   searchForm!: FormGroup;
@@ -68,24 +68,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/details", product.id]);
   }
 
-  nextPage(): void {
-    if (this.hasNextPage()) {
-      this.currentPage++;
-    }
-  }
-
-  prevPage(): void {
-    if (this.hasPreviousPage()) {
-      this.currentPage--;
-    }
-  }
-
-  hasNextPage(): boolean {
-    return (this.currentPage * this.itemsPerPage) < this.products.length;
-  }
-
-  hasPreviousPage(): boolean {
-    return this.currentPage > 1;
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex + 1;
   }
 
   get paginationVisible(): boolean {

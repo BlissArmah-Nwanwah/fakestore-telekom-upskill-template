@@ -21,9 +21,10 @@
   <section class="products-section">
     <div class="title-all-container">
       <div class="title-container">Products</div>
+      @if (!loading) {
       <div id="searchBar">
         <form [formGroup]="searchForm" class="search-bar">
-          <button type="submit"><i class="fas fa-search icon"></i></button>
+          <i class="fas fa-search icon-search"></i>
           <input
             type="text"
             placeholder="Search"
@@ -32,6 +33,7 @@
           />
         </form>
       </div>
+      }
     </div>
     <div class="content">
       @if (loading) {
@@ -73,19 +75,14 @@
         }
       </div>
       @if (paginationVisible) {
-      <div class="pagination-buttons">
-        <button
-          class="pagination-button"
-          (click)="prevPage()"
-          [disabled]="currentPage === 1"
-        >
-          <i class="fas fa-arrow-left"></i>
-        </button>
-        <p>{{ currentPage }} out of {{ productLength }}</p>
-        <button class="pagination-button cursor-pointer" (click)="nextPage()">
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      </div>
+      <mat-paginator
+        [length]="productLength * itemsPerPage"
+        [pageSize]="itemsPerPage"
+        [pageIndex]="currentPage - 1"
+        [showFirstLastButtons]="true"
+        (page)="handlePageEvent($event)"
+      >
+      </mat-paginator>
       }
     </div>
   </section>

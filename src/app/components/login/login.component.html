@@ -1,4 +1,4 @@
-<section class="grid-container large-grid-container">
+<section class="flex-container large-flex-container">
   <div class="large-image-container image-container">
     <img
       class="login-img"
@@ -16,36 +16,36 @@
       (ngSubmit)="onSubmit()"
     >
       <!-- username Address -->
-      <label for="username"> Username</label>
-      <div class="input-wrapper">
-        <input
-          name="username"
-          class="input"
-          type="username"
-          formControlName="username"
-          required
-        />
+      <div>
+        <label for="username"> Username*</label>
+        <div class="input-wrapper">
+          <input
+            name="username"
+            class="input"
+            type="username"
+            formControlName="username"
+            required
+          />
+        </div>
+        @if (signupForm.get('username')?.errors &&
+        (signupForm.get('username')?.dirty ||
+        signupForm.get('username')?.touched)) { @if
+        (signupForm.get('username')?.errors?.['required']){
+        <div class="error">username is required</div>
+        } }
       </div>
-      @if (signupForm.get('username')?.errors &&
-      (signupForm.get('username')?.dirty ||
-      signupForm.get('username')?.touched)) { @if
-      (signupForm.get('username')?.errors?.['required']){
-      <div class="error">username is required</div>
-      } }
 
       <!-- password -->
       <div>
-        <label for="password">Password</label>
+        <label for="password">Password*</label>
         <div class="input-wrapper">
-          <div class="border-2 rounded-md p-2">
-            <input
-              name="password"
-              class="input"
-              type="password"
-              formControlName="password"
-              required
-            />
-          </div>
+          <input
+            name="password"
+            class="input"
+            type="password"
+            formControlName="password"
+            required
+          />
         </div>
 
         @if (signupForm.get('password')?.errors &&
@@ -61,10 +61,14 @@
         }
       </div>
 
+      @if(errorMessage.length > 0){
+      <div class="error">Invalid credenetials</div>
+      }
+
       <button
         type="submit"
         class="submit-btn"
-        [ngClass]="{ disabled: signupForm.invalid }"
+        [ngClass]="{ disabled: signupForm.invalid || isLoading }"
         [disabled]="signupForm.invalid"
       >
         Log in

@@ -71,10 +71,15 @@ justify-content: space-between;
 .search-form {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
+  
 }
 
-
+.icon-search{
+  color: #969696 ;
+  font-size: 0.8rem;
+}
 
 .search-input {
   background-color: #F6F6F6;
