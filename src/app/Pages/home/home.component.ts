@@ -11,13 +11,10 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import {
   MatSnackBarModule,
   MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarRef,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { ItemCardComponent } from '../../components/item-card/item-card.component';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +23,7 @@ import {
   styleUrls: ['./home.component.css'],
   imports: [
     NavbarComponent,
+    ItemCardComponent,
     ReactiveFormsModule,
     MatButtonModule,
     MatPaginatorModule,

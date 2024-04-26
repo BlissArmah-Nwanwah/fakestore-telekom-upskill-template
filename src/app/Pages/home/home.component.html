@@ -43,33 +43,12 @@
       <div class="product-grid">
         @if (!loading && displayedProducts.length >0) { @for (product of
         displayedProducts; track product) {
-        <div class="product-card">
-          <div class="product-info" (click)="onProductSelectDetail(product)">
-            <img
-              class="product-image"
-              [src]="product.image"
-              [alt]="product.title"
-            />
-            <div class="product-details">
-              <p class="product-title">
-                {{ product.title }}
-              </p>
-              <div class="product-price">
-                <span>$</span>
-                {{ product.price }}
-              </div>
-            </div>
-          </div>
 
-          <button
-            mat-raised-button
-            color="basic"
-            (click)="onProductSelectedToCart(product)"
-          >
-            Add To Cart
-          </button>
-        </div>
-
+        <app-item-card
+          [product]="product"
+          (productSelectDetail)="onProductSelectDetail($event)"
+          (productAddToCart)="onProductSelectedToCart($event)"
+        ></app-item-card>
         }} @if (!loading && displayedProducts.length === 0) {
         <div class="no-products">No products found.</div>
         }
